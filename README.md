@@ -4,18 +4,18 @@ All of my future and past talks.
 
 ## Youtube
 
-* [Virtual DevOps Playground 2020](https://www.youtube.com/watch?v=JpznEfXcoe0)
+* <a href="https://www.youtube.com/watch?v=JpznEfXcoe0" target="_blank">Virtual DevOps Playground 2020</a>
     * Learn how to create a Go-powered CRUD API - ready to deploy!
 
-* [Golang in London 2020 - June](https://www.youtube.com/watch?v=b2o2Of5a05o)
+* <a href="https://www.youtube.com/watch?v=b2o2Of5a05o" target="_blank">Golang in London 2020 - June</a>
     * Start your story with Go by creating a music player
 
-* [Golang in London 2020 - May](https://www.youtube.com/watch?v=O7tyWi24mMY)
+* <a href="https://www.youtube.com/watch?v=O7tyWi24mMY" target="_blank">Golang in London 2020 - May</a>
     * How I started my story with Go
 
 ## Text
 
-* [Colorcode 2019](https://akondas.com/talks/colorcode-2019)
+* <a href="https://akondas.com/talks/colorcode-2019" target="_blank">Colorcode 2019</a>
     * How to hack your way into [hackthebox](https://www.hackthebox.eu/)
 
 ---
