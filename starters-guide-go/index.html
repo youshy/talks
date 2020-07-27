@@ -28,12 +28,11 @@
 
 				<section id="fragments">
           <h2>Table of contents</h2>
-          <ul>
+          <ul style="font-size:25px">
             <li class="fragment">Why should I even care?</li>
             <li class="fragment">How big players do it?</li>
             <li class="fragment">How I can do it?</li>
-            <li class="fragment">Example: Small app vs small package</li>
-            <li class="fragment">Where can I learn more?</li>
+            <li class="fragment">Example: Small API</li>
           </ul>
 				</section>
 
@@ -93,7 +92,7 @@
           <section>
           <h3>1. Flat Structure</h3>
             <p>Best for</p>
-            <ol>
+            <ol style="font-size:25px">
               <li>Small projects</li>
               <li>Testing ideas</li>
               <li>Packages</li> 
@@ -197,6 +196,221 @@
             <p>You don't have to structure your Go code in the same way as Kubernetes or Docker does.</p>
             <p>That's their use case - think in baby steps and expand as you <strong>Go</strong>.</p>
           </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Example: Small API</h2>
+          </section>
+          <section>
+            <h4>Requirements:</h4>
+            <ul style="font-size:25px">
+              <li>Logger and Database connector is reused in other apps</li>
+              <li>Keys validator is used only in the API</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <p style="text-align:left">Main app</p>
+            <div style="display:flex;flex-flow:row;justify-content:space-evenly"> 
+            <div style="width:50%">
+              <pre>
+                <code class="hljs shell" data-trim>
+                    | /pkg
+                    |   /app
+                    |     app.go
+                    |     app_test.go
+                    |     handlers.go
+                    |     handlers_test.go
+                    |   /keys
+                    |     keys.go
+                    |     keys_test.go
+                    | /build
+                    |   dockerfile
+                    |   docker-compose.yml
+                    | go.mod 
+                    | go.sum
+                    | main.go
+                    | README.md
+                </code>
+              </pre>
+            </div>
+              <div style="font-size:20px;width:30%">
+                <ul>
+                  <li>
+                    <div>
+                    <span style="color:orange">/app</span> is the main directory for the application with it's logic. 
+                    </div>
+                    <div>
+                    <span style="color:orange">app.go</span> holds the app startup logic, router and db initialisation.
+                    </div>
+                    <p>
+                    <span style="color:orange">handlers.go</span> as the name says, is the API handlers logic.
+                    </p>
+                  </li>
+                  <li><span style="color:orange">keys.go</span> is the package that will check the environment setup before the application runs. This is a very specific use-case!</li>
+                  <li><span style="color:orange">/build</span> holds all the files required for any type of build.</li>
+                  <li><span style="color:orange">main.go</span> in this case contains only the barebones required for the application starup</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+          <section>
+            <p style="text-align:left">main.go</p>
+            <pre>
+              <code class="hljs go" data-trim data-line-numbers="|11-15|16|17-20|21-24">
+package main
+
+import (
+  "log"
+
+  "github.com/account/app/pkg/app"
+  "github.com/account/app/pkg/keys"
+)
+
+func main() {
+  keys.Check(keys.Keys{
+    App:      true,
+    Postgres: true,
+    Logger:   true,
+  })
+  a := app.App{}
+  err := a.Initialize()
+  if err != nil {
+    log.Fatal(err)
+  }
+  err := a.Run()
+  if err != nil {
+    log.Fatal(err)
+  }
+}
+              </code>
+            </pre>
+          </section>
+          <section>
+            <p style="text-align:left">app.go</p>
+            <pre>
+              <code class="hljs go" data-trim data-line-numbers="|8-11|13-19">
+package app
+
+import (
+  "github.com/gofrs/uuid"
+  "github.com/gorilla/mux"
+)
+
+type App struct {
+  Router   *mux.Router
+  Database Database
+}
+
+type Database interface {
+  LoginUser(email string) (types.User, error)
+  GetUser(userId uuid.UUID) (types.User, error)
+  CreateUser(user types.User) error
+  ModifyUser(user types.User) error
+  DeleteUser(userId uuid.UUID) error
+}
+              </code>
+            </pre>
+          </section>
+          <section>
+            <p style="text-align:left">handlers.go</p>
+            <pre>
+              <code class="hljs go" data-trim data-line-numbers="|11-15">
+func (a *App) UserGet() http.Handler {
+  return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+    vars := mux.Vars(r)
+    uid, err := uuid.FromString(vars["user_id"])
+    if err != nil {
+      JSONResponse(w, http.StatusBadRequest, payload)
+      return
+    }
+    defer r.Body.Close()
+
+    user, err := a.Database.GetUser(uid)
+    if err != nil {
+      JSONResponse(w, http.StatusBadRequest, payload)
+      return
+    }
+
+    JSONResponse(w, http.StatusOK, payload)
+  })
+}
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <p style="text-align:left">Logger</p>
+            <div style="display:flex;flex-flow:row;justify-content:space-evenly;align-items:center"> 
+            <div style="width:50%">
+              <pre>
+                <code class="hljs shell" data-trim>
+                    | go.mod 
+                    | go.sum
+                    | logger.go
+                    | README.md
+                </code>
+              </pre>
+            </div>
+              <div style="font-size:20px;width:30%">
+                <p><span style="color:orange">logger.go</span> is basically a wrapper around <a href="https://pkg.go.dev/go.uber.org/zap?tab=doc">Uber's Zap</a> with some of my custom setup, depending on the stack.</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <p style="text-align:left">Database</p>
+            <div style="display:flex;flex-flow:row;justify-content:space-evenly"> 
+            <div style="width:50%">
+              <pre>
+                <code class="hljs shell" data-trim>
+                    | go.mod 
+                    | go.sum
+                    | database.go
+                    | user.go
+                    | README.md
+                </code>
+              </pre>
+            </div>
+              <div style="font-size:20px;width:30%">
+                <ul>
+                  <li><span style="color:orange">database.go</span> holds all the logic for initial database connection - in Postgres' case it'd build the connection string and build some functions for checking if the database is alive.</li>
+                  <li><span style="color:orange">user.go</span> holds the functions that will fetch the data from the database and return it in a proper fashion to the application for handlers to return it to the user.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="fragments">
+          <h3>In Conclusion</h3>
+          <ul style="font-size:30px">
+            <li class="fragment">Expand as you Go, don't overthink it from the start</li>
+            <li class="fragment">Use the structure that makes sense for your app</li>
+            <li class="fragment">Think about the overall architecture</li>
+            <li class="fragment">Have fun!</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 style="text-align:left">About Me</h2>
+          <div style="display:flex;flex-flow:row;justify-content:space-evenly">
+            <div>
+              <p>Go Engineer in <a href="https://ecs.co.uk/" target="_blank">ECS Digital</a></p>
+              <p style="text-align:left">Find Me:</p>
+              <ul>
+                <li><a href="https://twitter.com/arturkondas" target="_blank">Twitter - @arturkondas</a></li>
+                <li><a href="https://linkedin.com/in/arturkondas" target="_blank">Linkedin - @arturkondas</a></li>
+                <li><a href="https://akondas.com" target="_blank">Blog - akondas.com</a></li>
+              </ul>
+            </div>
+            <div>
+              <img src="https://avatars3.githubusercontent.com/u/21032478?s=460&u=2373849e0bfdaf312ab372d681532c6a94f25be2&v=4" alt="Me">
+            </div>
+          </div>
         </section>
 
 			</div>
