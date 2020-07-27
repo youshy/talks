@@ -10,9 +10,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
 		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="plugin/highlight/gruvbox.css" id="highlight-theme">
 	</head>
 	<body>
 		<div class="reveal">
@@ -103,36 +103,41 @@
           <section>
             <h4>How should it look?</h4>
             <p>Small project and testing ideas</p>
-            <div>
-              <code data-trim data-noescape data-line-numbers="2-5">
+            <pre>
+              <code class="hljs shell" data-trim>
                 |
-                | go.mod
+                | go.mod 
                 | go.sum
                 | main.go
                 | functionality.go
                 | /assets
                 |
               </code>
-            </div>
-            <ul>
-              <li>Try to steer away from utils.go</li>
-              <li>Use <code class="hljs go">package main</code> across your files</li>
-            </ul>
+            </pre>
           </section>
           <section>
-          <p>Packages</p>
-          <code>
-            |
-            | go.mod
-            | go.sum
-            | package.go
-            | thing.go
-            |
-          </code>
-          <li>
-            <ul>Again, try to steer away from utils.go</ul>
-            <ul>Use <code class="hljs go">package name</code> across your files (<strong>name</strong> is your package name)</ul>
-          </li>
+            <p>Packages</p>
+            <pre>
+              <code class="hljs shell" data-trim>
+                |
+                | go.mod 
+                | go.sum
+                | package.go
+                | functionality.go
+                |
+              </code>
+            </pre>
+          </section>
+          <section>
+            <div>
+              <div style="text-align: left; float: left;">
+                <p>Try to steer away from using <span style="color:orange">utils.go</span>, most of the time it'll end up being a mess.</p>
+              </div>
+              <div style="text-align: right; float: right;">
+                <p>Instead, place your "utility" functions in <span style="color:orange">main.go</span>.</p>
+                <p>As much as this is counter-intuitive, it'll make you think about the overall structure of the app.</p>
+              </div>
+            </div>
           </section>
         </section>
 
