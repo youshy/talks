@@ -32,7 +32,7 @@
             <li class="fragment">Why should I even care?</li>
             <li class="fragment">How big players do it?</li>
             <li class="fragment">How I can do it?</li>
-            <li class="fragment">Small app vs small package</li>
+            <li class="fragment">Example: Small app vs small package</li>
             <li class="fragment">Where can I learn more?</li>
           </ul>
 				</section>
@@ -75,7 +75,7 @@
         <section data-background-iframe="https://github.com/hashicorp/terraform" data-background-interactive>
           <div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
             <h2>Terraform</h2>
-            <p>Can you see the pattern?</p>
+            <p>Can you see any pattern?</p>
           </div>
         </section>
 
@@ -134,13 +134,71 @@
           </section>
         </section>
         <section class="fragments">
-          <ul>
-            <li>The only clearly visible difference between those two is the naming convention, the way you write stand-alone apps and packages shouldn't be the same.</li>
-            <li class="fragment">Try to steer away from using <span style="color:orange">utils.go</span>, most of the time it'll end up being a mess. As much as this is counter-intuitive, it'll make you think about the overall structure of the app.</li>
+          <ul style="font-size:30px">
+            <li>Try to steer away from using <span style="color:orange">utils.go</span>, most of the time it'll end up being a mess. As much as this is counter-intuitive, it'll make you think about the overall structure of the app.</li>
             <li class="fragment">If your files are getting awfully big, split them into multiple ones grouped by functionality. For example: <span style="color:orange">postgres.go</span>, <span style="color:orange">json.go</span>.</li>
-            <li class="fragment">Also, think about <span style="color:red">README.md</span> from the very beginning. Good documentation will save you multiple times!</li>
+            <li class="fragment">Also, think about <span style="color:orange">README.md</span> from the very beginning. Good documentation will save you multiple times!</li>
           </ul>
         </section>
+
+        <section>
+          <section>
+            <h3>2. Main app and packages</h3>
+            <p>Best for</p>
+            <ul>
+              <li>Basically anything else</li>
+            </ul>
+          </section>
+          <section>
+            <h4>Before diving into this, ask yourself one question:</h4>
+            <p>Will the packages be reused across other apps?</p>
+          </section>
+          <section>
+            <p>If yes, it makes a perfect sense to split them to separate repositories</p>
+            <p>If no, then we can follow the <strong>Big Players</strong> setup</p>
+          </section>
+          <section>
+            <div style="display:flex;justify-content:space-around;flex-flow:row;align-items:center"> 
+              <div>
+                <pre>
+                  <code class="hljs shell" data-trim>
+                    |
+                    | /pkg
+                    | /build
+                    | /examples
+                    | go.mod 
+                    | go.sum
+                    | main.go
+                    | README.md
+                    |
+                  </code>
+                </pre>
+              </div>
+              <div style="font-size:20px">
+                <ul>
+                  <li>Keep the source code directories as simple as possible, don't create all folders at once - extend only when you need</li>
+                  <li>Use <span style="color:orange">/pkg</span> for all packages used in the application only;</li>
+                  <li>Use <span style="color:orange">/build</span> for any build scripts;</li>
+                  <li><span style="color:orange">/examples</span> should be used if your app has some very specific functionality you want to highlight;</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <p>Go was created as an alternative to big C++/Java apps. <strong>Treat it like that!</strong></p>
+          </section>
+          <section>
+            <p>If you can keep it simple - do it.</p>
+          </section>
+          <section>
+            <p>You don't have to structure your Go code in the same way as Kubernetes or Docker does.</p>
+            <p>That's their use case - think in baby steps and expand as you <strong>Go</strong>.</p>
+          </section>
+        </section>
+
 			</div>
 		</div>
 
