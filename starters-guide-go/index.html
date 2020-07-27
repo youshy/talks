@@ -57,6 +57,7 @@
           <p class="fragment">Before we answer all the burning questions, let's check how big players structure their code</p>
         </section>
 
+        <!--TODO: Change to background image -->
         <section data-background-iframe="https://github.com/golang-standards/project-layout" data-background-interactive>
           <div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
             <h2>Project Layout by Golang Standards</h2>
@@ -64,12 +65,14 @@
           </div>
         </section>
 
+        <!--TODO: Change to background image -->
         <section data-background-iframe="https://github.com/kubernetes/kubernetes" data-background-interactive>
           <div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
             <h2>Kubernetes</h2>
           </div>
         </section>
 
+        <!--TODO: Change to background image -->
         <section data-background-iframe="https://github.com/hashicorp/terraform" data-background-interactive>
           <div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
             <h2>Terraform</h2>
@@ -82,51 +85,56 @@
           <p class="fragment">Does it mean it's the only valid way?</p>
         </section>
 
-				<section data-auto-animate>
-					<h2 data-id="code-title">With animations</h2>
-					<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|4,8-11|17|22-24">
-						import React, { useState } from 'react';
-
-						function Example() {
-						  const [count, setCount] = useState(0);
-
-						  return (
-						    &lt;div&gt;
-						      &lt;p&gt;You clicked {count} times&lt;/p&gt;
-						      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-						        Click me
-						      &lt;/button&gt;
-						    &lt;/div&gt;
-						  );
-						}
-
-						function SecondExample() {
-						  const [count, setCount] = useState(0);
-
-						  return (
-						    &lt;div&gt;
-						      &lt;p&gt;You clicked {count} times&lt;/p&gt;
-						      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-						        Click me
-						      &lt;/button&gt;
-						    &lt;/div&gt;
-						  );
-						}
-					</code></pre>
+        <section>
+          <h2>Let's think about our projects</h2>
+          <p>How to tackle the structure depending on the initial size</p>
 				</section>
 
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down the <strong>alt</strong> key (<strong>ctrl</strong> in Linux) and click on any element to zoom towards it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Click again to zoom back out.
-					</p>
-					<p>
-						(NOTE: Use ctrl + click in Linux.)
-					</p>
-				</section>
+        <section>
+          <h3>1. Flat Structure<\h3>
+          <section>
+            <p>Best for</p>
+            <li>
+              <ol>Small projects</ol>
+              <ol>Testing ideas</ol>
+              <ol>Packages</ol> 
+            </li>
+          </section>
+          <section>
+            <h4>How should it look?</h4>
+            <section>
+            <p>Small project and testing ideas</p>
+            <script type="text/template">
+              |
+              | go.mod
+              | go.sum
+              | main.go
+              | functionality.go
+              | /assets
+              |
+            </script>
+            <li>
+              <ul>Try to steer away from utils.go</ul>
+              <ul>Use <code class="hljs go">package main</code> across your files</ul>
+            </li>
+            </section>
+            <section>
+            <p>Packages</p>
+            <script type="text/template">
+              |
+              | go.mod
+              | go.sum
+              | package.go
+              | thing.go
+              |
+            </script>
+            <li>
+              <ul>Again, try to steer away from utils.go</ul>
+              <ul>Use <code class="hljs go">package name</code> across your files (<strong>name</strong> is your package name)</ul>
+            </li>
+            </section>
+          </section>
+        </section>
 
 				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
 					<h2>Auto-Animate</h2>
