@@ -2,6 +2,9 @@ All of my future and past talks.
 
 ## Presentations
 
+* <a href="https://akondas.com/talks/starters-guide-go/#/" target="_blank">A Starter's Guide to Go Projects"</a>
+  * Get your grinds on how to kickstart your Go project layout! 
+
 ## Youtube
 
 * <a href="https://www.youtube.com/watch?v=JpznEfXcoe0" target="_blank">Virtual DevOps Playground 2020</a>
