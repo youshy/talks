@@ -2,7 +2,7 @@ All of my future and past talks.
 
 ## Presentations
 
-* <a href="https://akondas.com/talks/starters-guide-go/#/" target="_blank">A Starter's Guide to Go Projects"</a>
+* <a href="https://akondas.com/talks/starters-guide-go/#/" target="_blank">A Starter's Guide to Go Projects</a>
   * Get your grinds on how to kickstart your Go project layout! 
 
 ## Youtube
